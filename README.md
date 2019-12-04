@@ -1,1 +1,1 @@
-SFML_test
+SFML/SNAKE
