@@ -19,7 +19,7 @@ int dir, num = 4;
 
 RenderWindow window(VideoMode(w, h), "Snake Game!", Style::Close);
 
-void Tick()
+/*void Tick()
 {
 	for (int i = num; i > 0; --i)
 	{
@@ -46,12 +46,11 @@ void Tick()
 			num = i;
 			menu(window);
 		}
-}
+}*/
 
 void start_game()
 {
 	srand(time(0));
-	menu(window);
 
 	Texture t1, t2;
 	t1.loadFromFile("images/white.png");
@@ -84,7 +83,8 @@ void start_game()
 		if (Keyboard::isKeyPressed(Keyboard::Up)) dir = 3;
 		if (Keyboard::isKeyPressed(Keyboard::Down)) dir = 0;
 
-		if (timer > delay) { timer = 0; Tick(); }
+		//if (timer > delay) { timer = 0; Tick(); }
+		if (timer > delay) { timer = 0; s->Moving(num,dir,s); }
 
 		////// draw  ///////
 		window.clear();
@@ -108,6 +108,7 @@ void start_game()
 
 int main()
 {
+	menu(window);
 	start_game();
 	return 0;
 }

@@ -6,4 +6,5 @@ class Snake
 public:
 	int x, y; 
 	Snake();
+	void Moving(int num, int dir, Snake *s);
 };
