@@ -1,7 +1,7 @@
 ﻿  main.cpp
-c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(53): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(63): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(95): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(24): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(36): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dev\source\repos\sfml_test\sfml_test\main.cpp(82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   SFML_test.vcxproj -> C:\Users\Dev\source\repos\SFML_test\Debug\SFML_test.exe

@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+bool isMenu = 1;
+
 void menu(sf::RenderWindow& window) 
 {
-	bool isMenu = 1;
 	int menuNum = 0;
 	
 	sf::Texture btnTexture1, btnTexture2, btnTexture3, btnTexture4, aboutTexture, settingsTexture, menuBackground;
@@ -75,4 +76,16 @@ void menu(sf::RenderWindow& window)
 
 		window.display();
 	}
+}
+
+void lose(sf::RenderWindow& window)
+{
+	sf::Texture loseScreenTexture;
+	loseScreenTexture.loadFromFile("images/lose_screen.png");
+	sf::Sprite loseScreen(loseScreenTexture);
+	window.draw(loseScreen);
+	window.display();
+	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape));
+	isMenu = true;
+	menu(window);
 }
