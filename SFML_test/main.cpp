@@ -2,20 +2,23 @@
 #include <iostream>
 #include <time.h>
 #include "Snake.h"
-#include "Fruit.h"
+//#include "Fruit.h"
 #include "Menu.h"
 
 using namespace sf;
+using namespace std;
 
-int N = 50, M = 30;
-int size = 16;
-int w = size * N;
-int h = size * M;
+int N = 20, M = 20;
+int size_pix = 16;
+int w = size_pix * N;
+int h = size_pix * M;
 
-Snake s[100];
-Fruit f(10, 10);
+int mass[20][20];
 
-int dir, num = 4;
+Snake s;
+
+int dir = 3;
+int num = 4;
 
 RenderWindow window(VideoMode(w, h), "Snake Game!", Style::Close);
 
@@ -41,28 +44,18 @@ void start_game()
 		clock.restart();
 		timer += delta;
 
-		Event e;
-		while (window.pollEvent(e))
+		if (Keyboard::isKeyPressed(Keyboard::Left)) dir = 0;
+		if (Keyboard::isKeyPressed(Keyboard::Right))
 		{
-			if (e.type == Event::Closed)
-				window.close();
+			dir = 1;
 		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Left)) dir = 1;
-		if (Keyboard::isKeyPressed(Keyboard::Right)) dir = 2;
-		if (Keyboard::isKeyPressed(Keyboard::Up)) dir = 3;
-		if (Keyboard::isKeyPressed(Keyboard::Down)) dir = 0;
-
+		if (Keyboard::isKeyPressed(Keyboard::Up)) dir = 2;
+		if (Keyboard::isKeyPressed(Keyboard::Down)) dir = 3;
+		
 		if (timer > delay) 
 		{
 			timer = 0; 
-			s->Moving(num,dir,s); 
-			s->Eaten(num, f, s);
-			s->Death(s, num, f);
-			if (num==0) 
-			{ 
-				lose(window); 
-			}
+			s.Moving(dir, mass);
 		}
 
 		////// draw  ///////
@@ -71,22 +64,46 @@ void start_game()
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < M; j++)
 			{
-				sprite1.setPosition(i * size, j * size);  window.draw(sprite1);
+				switch (mass[j][i])
+				{
+				case 0:
+					sprite1.setPosition(i * size_pix, j * size_pix);
+					window.draw(sprite1);
+					break;
+				case 1:
+					sprite3.setPosition(i * size_pix, j * size_pix);
+					window.draw(sprite3);
+					break;
+				case 3:
+					sprite2.setPosition(i * size_pix, j * size_pix);
+					window.draw(sprite2);
+					break;
+				}
 			}
-
-		for (int i = 0; i < num; i++)
-		{
-			sprite3.setPosition(s[i].x * size, s[i].y * size);  window.draw(sprite3);
-		}
-
-		sprite2.setPosition(f.x * size, f.y * size);  window.draw(sprite2);
-
 		window.display();
 	}
 }
 
 int main()
 {
+	mass[5][0] = 1;
+	mass[6][0] = 1;
+	mass[7][0] = 1;
+
+	mass[7][8] = 3;
+
+	s.seg[0].x = 7;
+	s.seg[0].value = 1;
+
+	s.seg[1].x = 6;
+	s.seg[1].value = 1;
+
+	s.seg[2].x = 5;
+	s.seg[2].value = 1;
+
+	s.seg[3].x = 4;
+	s.seg[3].value = 0;
+
 	menu(window);
 	start_game();
 	return 0;

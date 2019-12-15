@@ -2,48 +2,108 @@
 
 Snake::Snake()
 {
-	x = 0;
-	y = 0;
+	num_seg = 4;
+	for (int k=0;k< num_seg-1;k++)
+	{
+		Segment seg_s;
+		seg_s.x = 0;
+		seg_s.y = 0;
+		seg_s.value = 1;
+
+		seg.push_back(seg_s);
+	}
+	Segment seg_null;
+	seg_null.x = 0;
+	seg_null.y = 0;
+	seg_null.value = 0;
+	seg.push_back(seg_null);
 }
 
-void Snake::Moving(int num, int dir, Snake *s)
+int Snake::PixelType(int(&mappull)[20][20], int i, int j)
 {
-	for (int i = num; i > 0; --i)
+	return mappull[i][j];
+}
+
+void Snake::Grow(int direct)
+{
+	Segment seg_s;
+	num_seg++;
+
+	switch (direct)
 	{
-		s[i].x = s[i - 1].x;
-		s[i].y = s[i - 1].y;
+	case 0:
+		seg_s.x = seg.back().x;
+		seg_s.y = seg.back().y - 1;
+		break;
+	case 1:
+		seg_s.x = seg.back().x;
+		seg_s.y = seg.back().y + 1;
+		break;
+	case 2:
+		seg_s.x = seg.back().x - 1;
+		seg_s.y = seg.back().y;
+		break;
+	case 3:
+		seg_s.x = seg.back().x + 1;
+		seg_s.y = seg.back().y;
+		break;
+	}
+	seg_s.value = 1;
+	seg.push_back(seg_s);
+}
+
+void Snake::Moving(int dir, int(&mappull)[20][20])
+{
+	for (int i = num_seg - 1; i > 0; --i)
+	{
+		seg[i].x = seg[i - 1].x;
+		seg[i].y = seg[i - 1].y;
+		seg[i].value = seg[i - 1].value;
+		if (i == num_seg - 1)
+			seg[i].value = 0;
 	}
 
-	if (dir == 0) s[0].y += 1;
-	if (dir == 1) s[0].x -= 1;
-	if (dir == 2) s[0].x += 1;
-	if (dir == 3) s[0].y -= 1;
-
-	if (s[0].x > 50) s[0].x = 0;  if (s[0].x < 0) s[0].x = 50;
-	if (s[0].y > 30) s[0].y = 0;  if (s[0].y < 0) s[0].y = 30;
-}
-
-void Snake::Death(Snake *s, int &num, Fruit &f)
-{
-	for (int i = 1; i < num; i++)
+	switch (dir)
 	{
-		if (s[0].x == s[i].x && s[0].y == s[i].y)
+	case 0:
+		seg[0].y--;
+		if (PixelType(mappull, seg[0].x, seg[0].y) == 3)
 		{
-			for (int j = num; j > 0; j--)
-			{
-				f.spawn_new(s[j].x, s[j].y);
-				//std::cout << j << std::endl;
-			}
-			num = 0;
+			Grow(dir);
 		}
+		seg[0].value = 1;
+		break;
+	case 1:
+		seg[0].y++;
+		if (PixelType(mappull, seg[0].x, seg[0].y) == 3)
+		{
+			Grow(dir);
+		}
+		seg[0].value = 1;
+		break;
+	case 2:
+		seg[0].x--;
+		if (PixelType(mappull, seg[0].x, seg[0].y) == 3)
+		{
+			Grow(dir);
+		}
+		seg[0].value = 1;
+		break;
+	case 3:
+		seg[0].x++;
+		if (PixelType(mappull, seg[0].x, seg[0].y) == 3)
+		{
+			Grow(dir);
+		}
+		seg[0].value = 1;
+		break;
 	}
-}
 
-void Snake::Eaten(int &num, Fruit &f, Snake *s)
-{
-	if ((s[0].x == f.x) && (s[0].y == f.y))
+	if (seg[0].x > 19) seg[0].x = 0;  if (seg[0].x < 0) seg[0].x = 19;
+	if (seg[0].y > 19) seg[0].y = 0;  if (seg[0].y < 0) seg[0].y = 19;
+
+	for (auto p = seg.begin(); p != seg.end(); p++)
 	{
-		num++;
-		f.spawn_new();
+		mappull[p->x][p->y] = p->value;
 	}
 }

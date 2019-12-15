@@ -1,14 +1,23 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "Fruit.h"
+#include <vector>
 #include <iostream>
+
+using namespace std;
+
+struct Segment
+{
+	int x, y;
+	int value;
+};
 
 class Snake
 {
 public:
-	int x, y; 
+	int num_seg;
+	vector<Segment> seg;
 	Snake();
-	void Moving(int num, int dir, Snake *s);
-	void Death(Snake* s, int &num, Fruit &f);
-	void Eaten(int &num, Fruit &f, Snake* s);
+	void Moving(int dir, int(&mappull)[20][20]);
+	void Grow(int direct);
+	int PixelType(int(&mappull)[20][20], int i, int j);
 };
+
